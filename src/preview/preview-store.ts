@@ -33,21 +33,11 @@ export interface PreviewStoreInit<V, T extends Types.PreviewDocumentMode> {
 	mode: T;
 	project: Model.Project;
 	selectionArea: ElementArea;
-	synthetics: SyntheticComponents<V>;
 }
 
 export interface Components {
 	// tslint:disable-next-line:no-any
 	[id: string]: any;
-}
-
-export interface SyntheticComponents<V> {
-	'synthetic:box': V;
-	'synthetic:conditional': V;
-	'synthetic:page': V;
-	'synthetic:image': V;
-	'synthetic:link': V;
-	'synthetic:text': V;
 }
 
 export class PreviewStore<V> {
@@ -58,7 +48,6 @@ export class PreviewStore<V> {
 	@Mobx.observable private mode: Types.PreviewDocumentMode;
 	@Mobx.observable private project: Model.Project;
 	@Mobx.observable private selectionArea: ElementArea;
-	@Mobx.observable private synthetics: SyntheticComponents<V>;
 	@Mobx.observable private scrollPosition: Types.Point;
 	private sender?: Sender;
 
@@ -66,7 +55,6 @@ export class PreviewStore<V> {
 		this.mode = init.mode;
 		this.project = init.project;
 		this.components = init.components;
-		this.synthetics = init.synthetics;
 		this.selectionArea = init.selectionArea;
 		this.highlightArea = init.highlightArea;
 	}
@@ -92,23 +80,16 @@ export class PreviewStore<V> {
 			return;
 		}
 
-		const type = pattern.getType();
+		// tslint:disable-next-line:no-any
+		const component = this.components[pattern.getId()];
 
-		switch (type) {
-			case Types.PatternType.Pattern:
-				// tslint:disable-next-line:no-any
-				const component = this.components[pattern.getId()];
-
-				if (!component) {
-					throw new Error(
-						`Could not find component with id "${pattern.getId()}" for pattern "${pattern.getName()}:${pattern.getExportName()}".`
-					);
-				}
-
-				return component[pattern.getExportName()];
-			default:
-				return this.synthetics[type];
+		if (!component) {
+			throw new Error(
+				`Could not find component with id "${pattern.getId()}" for pattern "${pattern.getName()}:${pattern.getExportName()}".`
+			);
 		}
+
+		return component[pattern.getExportName()];
 	}
 
 	public getElementById(id: string): Model.Element | undefined {
