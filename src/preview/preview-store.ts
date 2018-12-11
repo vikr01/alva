@@ -136,7 +136,7 @@ export class PreviewStore<V> {
 	): { [propName: string]: Types.ElementPropertyValue } {
 		return element.getProperties().reduce((renderProperties, elementProperty) => {
 			const patternProperty = elementProperty.getPatternProperty();
-
+			console.log(element.getProperties(), 'properties *****');
 			if (!patternProperty) {
 				return renderProperties;
 			}
