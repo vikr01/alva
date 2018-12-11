@@ -1,0 +1,11 @@
+{
+  "name": "essentials",
+  "version": "1.0.0",
+  "description": "Built-in components for basic layouts and logic",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch"
+  },
+  "license": "MIT"
+}
