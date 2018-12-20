@@ -257,13 +257,24 @@ async function findPatternCandidates({
 	return [...declarationsList].map(declarationPath => {
 		const artifactPath = setExtname(declarationPath, '.js');
 		const significantPath = getSignificantPath(Path.relative(cwd, declarationPath));
-		const dName = last(significantPath);
+
+		/** Show only filename without extension as path */
+		const displayNamePath = last(significantPath);
+		const displayNameExt = displayNamePath
+			? Path.basename(displayNamePath, Path.extname(displayNamePath))
+			: 'Unknown Pattern';
+
+		/** If filename still consists of an extension (like '.d.ts') remove it, too */
+		const displayName =
+			Path.extname(displayNameExt) === '.d'
+				? Path.basename(displayNameExt, Path.extname(displayNameExt))
+				: displayNameExt;
 
 		return {
 			artifactPath,
 			declarationPath,
 			description: '',
-			displayName: dName ? Path.basename(dName, Path.extname(dName)) : 'Unknown Pattern',
+			displayName,
 			id: significantPath.join('/'),
 			sourcePath: Path.dirname(declarationPath)
 		};
