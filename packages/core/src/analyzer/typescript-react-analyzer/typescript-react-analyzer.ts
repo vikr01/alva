@@ -36,6 +36,7 @@ export interface AnalyzeOptions {
 	getGlobalPropertyId(patternContextId: string, propertyContextId: string): string;
 	getGlobalSlotId(patternContextId: string, slotContextId: string): string;
 	getGobalEnumOptionId(enumId: string, optionContextId: string): string;
+	analyzeBuiltins: boolean;
 }
 
 interface AnalyzeContext {
@@ -231,7 +232,7 @@ function analyzePatternExport(
 			name: ex.displayName || (exportName !== 'default' ? exportName : ctx.candidate.id),
 			propertyIds: properties.map(p => p.id),
 			slots,
-			type: ex.patternType
+			type: ctx.options.analyzeBuiltins ? ex.patternType : 'pattern'
 		},
 		properties
 	};

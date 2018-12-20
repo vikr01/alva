@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet';
 
 export interface PageProps {
 	// tslint:disable-next-line:no-any
-	head?: any;
-	content?: any;
+	/** @ignore */ head?: any;
+	/** @ignore */ content?: any;
 	children?: React.ReactNode;
 }
 

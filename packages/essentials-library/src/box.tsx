@@ -63,7 +63,7 @@ export enum FlexAlignVertical {
 }
 
 /**
- * @name Testbox
+ * @name Box
  * @description for Flexbox Layouts
  * @icon Box
  * @patternType synthetic:box
