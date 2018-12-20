@@ -174,7 +174,7 @@ function analyzePatternExport(
 	}
 
 	const [propTypes] = reactTypeArguments;
-	const exportName = ex.name || 'default';
+	const exportName = ex.exportName || 'default';
 	const contextId = `${ctx.candidate.id}:${exportName}`;
 	const id = ctx.options.getGlobalPatternId(contextId);
 
@@ -228,7 +228,7 @@ function analyzePatternExport(
 			exportName,
 			icon: ex.icon,
 			id,
-			name: exportName !== 'default' ? exportName : ctx.candidate.displayName,
+			name: ex.displayName || (exportName !== 'default' ? exportName : ctx.candidate.id),
 			origin: 'user-provided',
 			propertyIds: properties.map(p => p.id),
 			slots,
