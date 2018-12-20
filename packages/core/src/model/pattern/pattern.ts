@@ -186,6 +186,7 @@ export class Pattern {
 		this.description = pattern.getDescription();
 		this.exportName = pattern.getExportName();
 		this.name = pattern.getName();
+		this.icon = pattern.getIcon();
 		this.origin = pattern.getOrigin();
 		this.patternLibrary = context ? context.patternLibrary : this.patternLibrary;
 		this.propertyIds = pattern.propertyIds;
