@@ -16,7 +16,7 @@ const style = {
  * @name Text
  * @description for Headlines, Copy and more
  * @icon Type
- * @type synthetic:text
+ * @patternType synthetic:text
  */
 export const Text: React.SFC<TextProps> = props => {
 	return <span style={style}>{props.text}</span>;

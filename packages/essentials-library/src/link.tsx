@@ -20,7 +20,7 @@ export interface LinkProps {
  * @name Link
  * @description for Interaction
  * @icon ExternalLink
- * @type synthetic:link
+ * @patternType synthetic:link
  */
 export const Link: React.SFC<LinkProps> = props => {
 	return (

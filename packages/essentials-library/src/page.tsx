@@ -3,13 +3,14 @@ import { Helmet } from 'react-helmet';
 
 export interface PageProps {
 	// tslint:disable-next-line:no-any
-	/** @ignore */ head?: any;
-	/** @ignore */ content?: any;
-	/** @ignore */ children?: React.ReactNode;
+	head?: any;
+	content?: any;
+	children?: React.ReactNode;
 }
 
 /**
- * @type synthetic:page
+ * @name Page
+ * @patternType synthetic:page
  */
 export const Page: React.SFC<PageProps> = props => {
 	return (

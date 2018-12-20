@@ -66,7 +66,7 @@ export enum FlexAlignVertical {
  * @name Testbox
  * @description for Flexbox Layouts
  * @icon Box
- * @type synthetic:box
+ * @patternType synthetic:box
  */
 export const Box: React.SFC<BoxProps> = props => {
 	return (

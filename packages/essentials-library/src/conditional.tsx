@@ -18,7 +18,7 @@ export interface ConditionalProps {
  * @name Conditional
  * @description for Show and Hide Logic
  * @icon ToggleRight
- * @type synthetic:conditional
+ * @patternType synthetic:conditional
  */
 export const Conditional: React.SFC<ConditionalProps> = props => {
 	return <>{props.condition ? props.ifTrue : props.ifFalse}</>;

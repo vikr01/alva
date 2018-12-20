@@ -30,7 +30,7 @@ export interface DesignProps {
  * @name Design
  * @description for Design Drafts
  * @icon Image
- * @type synthetic:image
+ * @patternType synthetic:image
  */
 export const Design: React.SFC<DesignProps> = props => {
 	return (

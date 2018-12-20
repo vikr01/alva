@@ -2,6 +2,7 @@ import { findDeclaration } from './find-declaration';
 import * as TypeScript from 'typescript';
 import { TypescriptExport } from './typescript-export';
 import { TypeScriptType } from './typescript-type';
+import * as Types from '../../types';
 
 export function getExportInfos(
 	program: TypeScript.Program,
@@ -25,6 +26,11 @@ export function getExportInfos(
 	const iconTag = jsDocTags.find(tag => tag.tagName.escapedText === 'icon');
 	const exportIcon = iconTag ? iconTag.comment : '';
 
+	const exportPatternTypeTag = jsDocTags.find(tag => tag.tagName.escapedText === 'patternType');
+	const exportPatternType = exportPatternTypeTag
+		? (exportPatternTypeTag.comment as Types.SerializedPatternType)
+		: 'pattern';
+
 	if (TypeScript.isVariableStatement(statement)) {
 		for (const declaration of statement.declarationList.declarations) {
 			if (!declaration.type) {
@@ -43,6 +49,7 @@ export function getExportInfos(
 					description: exportDescription || '',
 					icon: exportIcon || '',
 					type: exportType,
+					patternType: exportPatternType,
 					ignore: exportIgnore,
 					statement
 				}
@@ -67,6 +74,7 @@ export function getExportInfos(
 				description: exportDescription || '',
 				icon: exportIcon || '',
 				type: exportType,
+				patternType: exportPatternType,
 				ignore: exportIgnore,
 				statement
 			}
@@ -89,6 +97,7 @@ export function getExportInfos(
 					description: exportDescription || '',
 					icon: exportIcon || '',
 					type: exportType,
+					patternType: exportPatternType,
 					ignore: exportIgnore,
 					statement
 				}
@@ -113,6 +122,7 @@ export function getExportInfos(
 				description: exportDescription || '',
 				icon: exportIcon || '',
 				type: exportType,
+				patternType: exportPatternType,
 				ignore: exportIgnore,
 				statement
 			};
