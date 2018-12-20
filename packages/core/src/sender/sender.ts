@@ -125,7 +125,14 @@ export class Sender implements Types.Sender {
 		}
 
 		this.log('↓', parseResult.result);
-		matchers.forEach(matcher => matcher(parseResult.result));
+		matchers.forEach(async matcher => {
+			try {
+				await matcher(parseResult.result);
+			} catch (err) {
+				console.error(`${header.type} matcher failed:`);
+				console.log(err);
+			}
+		});
 	};
 
 	public async start(): Promise<void> {

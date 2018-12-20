@@ -229,7 +229,6 @@ function analyzePatternExport(
 			icon: ex.icon,
 			id,
 			name: ex.displayName || (exportName !== 'default' ? exportName : ctx.candidate.id),
-			origin: 'user-provided',
 			propertyIds: properties.map(p => p.id),
 			slots,
 			type: 'pattern'

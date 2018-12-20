@@ -16,7 +16,8 @@
     "lint": "tslint --project . -c tslint.json 'src/**/*.ts'",
     "static": "node build/bin/alva --out=.static --host=static",
     "watch": "concurrently \"tsc --project . --watch\" \"webpack -w\"",
-    "watch:tests": "jest --watch",
+    "watch:tsc": "tsc --project . --watch",
+    "watch:webpack": "webpack -w",    "watch:tests": "jest --watch",
     "test": "jest"
   },
   "repository": {

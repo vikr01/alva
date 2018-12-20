@@ -19,7 +19,7 @@ let app: Model.AlvaApp;
 let history;
 let store: ViewStore;
 
-window.requestIdleCallback = window.requestIdleCallback || window.requestAnimationFrame;
+(window as any).requestIdleCallback = window.requestIdleCallback || window.requestAnimationFrame;
 
 export async function startRenderer(): Promise<void> {
 	const el = document.getElementById('data') as HTMLElement;

@@ -7,6 +7,7 @@ import * as Types from '../../types';
 import { build } from './build';
 import * as Fs from 'fs-extra';
 import * as Model from '../../model';
+import { Project } from '../../model';
 
 const clearModule = require('clear-module');
 const serveHandler = require('serve-handler');
@@ -56,12 +57,16 @@ async function main(forced?: ForcedFlags): Promise<void> {
 		throw projectResult.error;
 	}
 
-	if (projectResult) {
+	if (projectResult && projectResult.status === Types.ProjectStatus.Ok) {
 		const p = projectResult.result;
 		nodeHost.log(`Embedding ${p.getName()} at http://127.0.01:${port}/project/${p.getId()}`);
 	}
 
-	await build({ path, host: nodeHost, project: projectResult ? projectResult.result : undefined });
+	await build({
+		path,
+		host: nodeHost,
+		project: projectResult ? (projectResult as { result: Model.Project }).result : undefined
+	});
 
 	const onRestart = async () => {
 		const sourceDirectory = await nodeHost.resolveFrom(Types.HostBase.Source, '.');

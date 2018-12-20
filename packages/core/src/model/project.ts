@@ -8,15 +8,15 @@ import * as _ from 'lodash';
 import { Page } from './page';
 import { PatternSearch } from './pattern-search';
 import { Pattern, PatternSlot } from './pattern';
-import { PatternLibrary, PatternLibraryCreateOptions } from './pattern-library';
-import { AnyPatternProperty, PatternProperty } from './pattern-property';
+import { PatternLibrary } from './pattern-library';
+import { AnyPatternProperty } from './pattern-property';
 import * as Types from '../types';
 import { UserStore } from './user-store';
 import { UserStoreEnhancer, defaultCode, defaultJavaScript } from './user-store-enhancer';
 import { UserStoreReference } from './user-store-reference';
 import * as uuid from 'uuid';
 import * as ModelTree from '../model-tree';
-import { ModelName } from '../types';
+import { builtinPatternLibrary } from './pattern-library/builtin-pattern-library';
 
 export interface ProjectProperties {
 	draft: boolean;
@@ -184,24 +184,6 @@ export class Project {
 		});
 	}
 
-	public static createBuiltinPatternLibrary(opts?: PatternLibraryCreateOptions): PatternLibrary {
-		return PatternLibrary.create(
-			{
-				bundle: '',
-				bundleId: '',
-				description: 'Built-in components for basic layouts and logic',
-				id: uuid.v4(),
-				version: '1.0.0',
-				name: 'Essentials',
-				origin: Types.PatternLibraryOrigin.BuiltIn,
-				patternProperties: [],
-				patterns: [],
-				state: Types.PatternLibraryState.Connected
-			},
-			opts
-		);
-	}
-
 	public static create(init: ProjectCreateInit): Project {
 		const userStore = new UserStore({
 			id: uuid.v4(),
@@ -216,7 +198,7 @@ export class Project {
 			name: init.name,
 			pages: [],
 			path: init.path,
-			patternLibraries: [Project.createBuiltinPatternLibrary()],
+			patternLibraries: [builtinPatternLibrary],
 			userStore,
 			draft: init.draft
 		});
@@ -331,17 +313,6 @@ export class Project {
 
 	@Mobx.action
 	public addPatternLibrary(lib: PatternLibrary): void {
-		if (lib.getOrigin() === Types.PatternLibraryOrigin.BuiltIn) {
-			const updatedLibrary = Project.createBuiltinPatternLibrary({
-				getGlobalEnumOptionId: lib.assignEnumOptionId.bind(lib),
-				getGlobalPatternId: lib.assignPatternId.bind(lib),
-				getGlobalPropertyId: lib.assignPropertyId.bind(lib),
-				getGlobalSlotId: lib.assignSlotId.bind(lib)
-			});
-
-			lib.update(updatedLibrary);
-		}
-
 		this.patternLibraries.set(lib.getId(), lib);
 	}
 
@@ -353,9 +324,7 @@ export class Project {
 	}
 
 	public getBuiltinPatternLibrary(): PatternLibrary {
-		return this.getPatternLibraries().find(
-			p => p.getOrigin() === Types.PatternLibraryOrigin.BuiltIn
-		) as PatternLibrary;
+		return builtinPatternLibrary;
 	}
 
 	public getElementActionById(id: string): undefined | ElementAction {

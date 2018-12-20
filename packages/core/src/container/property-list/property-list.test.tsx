@@ -50,7 +50,6 @@ function createUnknownPropElement(project: Project): Element {
 		id: 'unknown',
 		inputType: T.PatternPropertyInputType.Default,
 		label: 'unknown',
-		origin: T.PatternPropertyOrigin.UserProvided,
 		propertyName: 'unknown',
 		required: false,
 		typeText: ''
@@ -67,7 +66,6 @@ function createUnknownPropElement(project: Project): Element {
 			exportName: 'pattern',
 			icon: '',
 			name: 'Pattern',
-			origin: T.PatternOrigin.UserProvided,
 			propertyIds,
 			slots: [],
 			type: T.PatternType.Pattern
